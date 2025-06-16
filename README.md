@@ -225,8 +225,8 @@ MIT License - 详见 LICENSE 文件
 
 ## 📞 联系方式
 
-- 项目维护者：[您的姓名]
-- 邮箱：[您的邮箱]
+- 项目维护者：孙钰林
+- 邮箱：yulinsun547@gmail.com
 - 项目地址：[GitHub链接]
 
 ---
