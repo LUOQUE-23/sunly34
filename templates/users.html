@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户管理 - 文学社区</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/users.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <a href="/">文学社区</a>
+            </div>
+            <nav class="nav">
+                <a href="/" class="nav-link">首页</a>
+                <a href="/articles" class="nav-link">文章</a>
+                <a href="/categories" class="nav-link">分类</a>
+                <a href="/profile" class="nav-link">个人中心</a>
+                <a href="/admin" class="nav-link">管理后台</a>
+            </nav>
+            <div class="user-info">
+                <span id="username"></span>
+                <a href="javascript:void(0)" onclick="logout()" class="logout-btn">退出</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="users-container">
+            <div class="page-header">
+                <h1>用户管理</h1>
+                <button class="add-user-btn" onclick="showAddUserModal()">添加用户</button>
+            </div>
+
+            <div class="filter-bar">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="搜索用户名...">
+                    <button onclick="searchUsers()">搜索</button>
+                </div>
+                <div class="filter-options">
+                    <select id="roleFilter" onchange="filterUsers()">
+                        <option value="">所有角色</option>
+                        <option value="普通用户">普通用户</option>
+                        <option value="笔官">笔官</option>
+                        <option value="文判">文判</option>
+                    </select>
+                    <select id="statusFilter" onchange="filterUsers()">
+                        <option value="">所有状态</option>
+                        <option value="active">正常</option>
+                        <option value="disabled">禁用</option>
+                    </select>
+                    <select id="sortBy" onchange="filterUsers()">
+                        <option value="created_at">注册时间</option>
+                        <option value="articles">文章数</option>
+                        <option value="comments">评论数</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="users-list" id="usersList">
+                <!-- 用户列表将通过JavaScript动态加载 -->
+            </div>
+
+            <button class="load-more-btn" id="loadMoreBtn" onclick="loadMoreUsers()">加载更多</button>
+        </div>
+    </main>
+
+    <!-- 添加/编辑用户模态框 -->
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="hideUserModal()">&times;</span>
+            <h2 id="modalTitle">添加用户</h2>
+            <form id="userForm" onsubmit="saveUser(event)">
+                <input type="hidden" id="userId">
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">邮箱</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" name="password">
+                    <small>编辑时留空表示不修改密码</small>
+                </div>
+                <div class="form-group">
+                    <label for="role">角色</label>
+                    <select id="role" name="role" required>
+                        <option value="普通用户">普通用户</option>
+                        <option value="笔官">笔官</option>
+                        <option value="文判">文判</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="status">状态</label>
+                    <select id="status" name="status" required>
+                        <option value="active">正常</option>
+                        <option value="disabled">禁用</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="save-btn">保存</button>
+                    <button type="button" class="cancel-btn" onclick="hideUserModal()">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 删除确认模态框 -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <h2>确认删除</h2>
+            <p>确定要删除这个用户吗？此操作不可恢复。</p>
+            <div class="form-actions">
+                <button class="delete-btn" onclick="confirmDelete()">删除</button>
+                <button class="cancel-btn" onclick="hideDeleteModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/users.js') }}"></script>
+</body>
+</html> 

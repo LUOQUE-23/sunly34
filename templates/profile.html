@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心 - 墨韵文苑</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=20241201">
+    <link rel="stylesheet" href="/static/css/profile.css">
+</head>
+<body>
+        <!-- 头部导航 -->
+        <header class="header">
+            <div class="container">
+                <div class="nav-brand">
+                    <h1 class="brand-title">墨韵文苑</h1>
+                    <p class="brand-subtitle">品文字之美，悟人生之道</p>
+                </div>
+                <nav class="nav-menu">
+                    <ul class="nav-list">
+                        <li><a href="/" class="nav-link">首页</a></li>
+                        <li><a href="/articles" class="nav-link">文章</a></li>
+                        <li><a href="/daily-quote" class="nav-link ">每日一句</a></li>
+                    </ul>
+                    <div class="user-menu hidden">
+                        <span class="username"></span>
+                        <div class="dropdown-content">
+                            <a href="/profile" class="dropdown-item">个人中心</a>
+                            <a href="/favorites" class="dropdown-item">我的收藏</a>
+                            <a href="/admin" class="dropdown-item admin-link hidden">管理后台</a>
+                            <a href="#" class="dropdown-item" id="logout-btn">退出登录</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+    <main class="main">
+        <div class="profile-container">
+            <!-- 左侧：用户信息卡片 -->
+            <div class="profile-card">
+                <div class="profile-header" style="padding-bottom:10px;">
+                    <h2 id="profileUsername" style="margin-bottom:8px;">用户名</h2>
+                    <div class="profile-bio" id="profileBio" style="color:#888;font-size:14px;margin-bottom:12px;">
+                        这个人很低调，什么都没写~
+                    </div>
+                    <div class="profile-stats" style="background:#f8f9fa;padding:10px 0;border-radius:6px;">
+                        <span>👍 获赞 <b id="likeCount">0</b></span>
+                        <span>💬 评论 <b id="commentCount">0</b></span>
+                        <span>📝 文章 <b id="articleCount">0</b></span>
+                    </div>
+                </div>
+            </div>
+            <!-- 右侧：我的文章列表 -->
+            <div class="profile-articles">
+                <h3>我的文章</h3>
+                <div id="myArticlesList" class="articles-list">
+                    <!-- 文章列表通过JS加载 -->
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 墨韵文苑. 文字如墨，情深如海.</p>
+        </div>
+    </footer>
+    <script src="/static/js/profile.js?v=20241201"></script>
+</body>
+</html> 

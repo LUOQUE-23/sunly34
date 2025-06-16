@@ -1,0 +1,90 @@
+.daily-quote-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.quote-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.quote-text {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.quote-author {
+    font-size: 1rem;
+    color: #666;
+}
+
+.history-section {
+    max-width: 800px;
+    margin: 40px auto 0 auto;
+    padding: 20px;
+    background: #fafbfc;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.history-section .section-title {
+    font-size: 1.5rem;
+    color: #b53a1a;
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.history-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.history-item {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    padding: 20px 24px;
+    width: calc(50% - 10px);
+    min-width: 260px;
+    box-sizing: border-box;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: box-shadow 0.2s;
+}
+@media (max-width: 700px) {
+    .history-item {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+.history-item:hover {
+    box-shadow: 0 6px 24px rgba(181,58,26,0.10);
+}
+.history-quote {
+    font-size: 1.15rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+.history-author {
+    font-size: 0.98rem;
+    color: #888;
+    text-align: right;
+} 

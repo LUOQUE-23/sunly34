@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章管理 - 墨韵文苑</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/articles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand"> 
+                <h1 class="brand-title">墨韵<span style="color:#b53a1a;">文苑</span></h1>
+                <p class="brand-subtitle">品文字之美，悟人生之道</p>
+            </div>
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="/" class="nav-link">首页</a></li>
+                    <li><a href="/articles" class="nav-link active">文章</a></li>
+                    <li><a href="/search" class="nav-link">搜索</a></li>
+                    <li><a href="/daily-quote" class="nav-link">每日一句</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" id="loginBtn">登录</button>
+                    <button class="btn btn-primary" id="registerBtn">注册</button>
+                </div>
+                <div class="user-menu hidden">
+                    <span class="username"></span>
+                    <div class="dropdown-content">
+                        <a href="/profile" class="dropdown-item">个人中心</a>
+                        <a href="/favorites" class="dropdown-item">我的收藏</a>
+                        <a href="/admin" class="dropdown-item admin-link hidden">管理后台</a>
+                        <a href="#" class="dropdown-item" id="logout-btn">退出登录</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main class="articles-container">
+        <!-- 页面标题和操作按钮 -->
+        <div class="page-header">
+            <h1>文章管理</h1>
+            <div class="header-actions">
+                <button class="btn btn-danger" id="batch-delete-btn" style="display: none;">批量删除</button>
+                <button class="btn btn-primary" id="new-article-btn">写文章</button>
+            </div>
+        </div>
+
+        <!-- 筛选和搜索 -->
+        <div class="filter-bar">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="搜索文章..." aria-label="搜索文章">
+                <button class="btn btn-secondary" id="search-btn">搜索</button>
+            </div>
+            <div class="filter-options">
+                <select id="category-filter" title="选择分类" aria-label="选择分类">
+                    <option value="">全部分类</option>
+                </select>
+                <select id="status-filter" title="选择状态" aria-label="选择状态">
+                    <option value="">全部状态</option>
+                    <option value="draft">草稿</option>
+                    <option value="published">已发布</option>
+                </select>
+                <select id="sort-by" title="排序方式" aria-label="排序方式">
+                    <option value="created_at">创建时间</option>
+                    <option value="updated_at">更新时间</option>
+                    <option value="likes">点赞数</option>
+                    <option value="comments">评论数</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 文章列表 -->
+        <div class="articles-list">
+            <!-- 文章列表将通过JavaScript动态加载 -->
+        </div>
+
+        <!-- 加载更多按钮 -->
+        <button class="load-more-btn" id="load-more-btn">加载更多</button>
+    </main>
+
+    <!-- 写文章/编辑文章模态框 -->
+    <div class="modal" id="article-modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3>分享文字</h3>
+                <span class="close" id="close-modal">&times;</span>
+            </div>
+            <form class="modal-form" id="article-form">
+                <div class="form-group">
+                    <label for="title">标题</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">分类</label>
+                    <select id="category" name="category" required>
+                        <option value="">请选择分类</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="content">内容</label>
+                    <textarea id="content" name="content" rows="10" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-full">发布</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 删除确认对话框 -->
+    <div class="modal" id="delete-modal">
+        <div class="modal-content">
+            <h3>确认删除</h3>
+            <p>您确定要删除这篇文章吗？此操作不可恢复。</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="cancel-delete">取消</button>
+                <button class="btn btn-danger" id="confirm-delete">确认删除</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/articles.js"></script>
+</body>
+</html> 

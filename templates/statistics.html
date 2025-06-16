@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据统计 - 文章管理系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/statistics.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1 class="site-title">文章管理系统</h1>
+            <nav class="nav">
+                <a href="/" class="nav-link">首页</a>
+                <a href="/articles" class="nav-link">文章管理</a>
+                <a href="/categories" class="nav-link">分类管理</a>
+                <a href="/comments" class="nav-link">评论管理</a>
+                <a href="/users" class="nav-link">用户管理</a>
+                <a href="/settings" class="nav-link">系统设置</a>
+                <a href="/statistics" class="nav-link active">数据统计</a>
+            </nav>
+            <div class="user-info">
+                <span id="username"></span>
+                <a href="/admin" style="display: none;">管理后台</a>
+                <a href="javascript:void(0)" onclick="logout()">退出</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="statistics-container">
+            <div class="page-header">
+                <h1>数据统计</h1>
+                <div class="date-range">
+                    <input type="date" id="startDate">
+                    <span>至</span>
+                    <input type="date" id="endDate">
+                    <button onclick="loadStatistics()">查询</button>
+                </div>
+            </div>
+
+            <div class="statistics-grid">
+                <!-- 概览卡片 -->
+                <div class="stat-card">
+                    <h3>总览</h3>
+                    <div class="stat-content">
+                        <div class="stat-item">
+                            <span class="stat-value" id="totalArticles">0</span>
+                            <span class="stat-label">文章总数</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="totalComments">0</span>
+                            <span class="stat-label">评论总数</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="totalUsers">0</span>
+                            <span class="stat-label">用户总数</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="totalLikes">0</span>
+                            <span class="stat-label">点赞总数</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 文章统计 -->
+                <div class="stat-card">
+                    <h3>文章统计</h3>
+                    <div class="stat-content">
+                        <div id="articleChart" class="chart"></div>
+                        <div class="stat-details">
+                            <div class="stat-item">
+                                <span class="stat-value" id="publishedArticles">0</span>
+                                <span class="stat-label">已发布</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="draftArticles">0</span>
+                                <span class="stat-label">草稿</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="hiddenArticles">0</span>
+                                <span class="stat-label">隐藏</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 评论统计 -->
+                <div class="stat-card">
+                    <h3>评论统计</h3>
+                    <div class="stat-content">
+                        <div id="commentChart" class="chart"></div>
+                        <div class="stat-details">
+                            <div class="stat-item">
+                                <span class="stat-value" id="approvedComments">0</span>
+                                <span class="stat-label">已通过</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="pendingComments">0</span>
+                                <span class="stat-label">待审核</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="rejectedComments">0</span>
+                                <span class="stat-label">已拒绝</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 用户统计 -->
+                <div class="stat-card">
+                    <h3>用户统计</h3>
+                    <div class="stat-content">
+                        <div id="userChart" class="chart"></div>
+                        <div class="stat-details">
+                            <div class="stat-item">
+                                <span class="stat-value" id="activeUsers">0</span>
+                                <span class="stat-label">活跃用户</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="newUsers">0</span>
+                                <span class="stat-label">新增用户</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="inactiveUsers">0</span>
+                                <span class="stat-label">禁用用户</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 分类统计 -->
+                <div class="stat-card">
+                    <h3>分类统计</h3>
+                    <div class="stat-content">
+                        <div id="categoryChart" class="chart"></div>
+                        <div class="stat-details">
+                            <div class="stat-item">
+                                <span class="stat-value" id="totalCategories">0</span>
+                                <span class="stat-label">分类总数</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="activeCategories">0</span>
+                                <span class="stat-label">活跃分类</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="disabledCategories">0</span>
+                                <span class="stat-label">禁用分类</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 趋势统计 -->
+                <div class="stat-card">
+                    <h3>趋势统计</h3>
+                    <div class="stat-content">
+                        <div id="trendChart" class="chart"></div>
+                        <div class="stat-details">
+                            <div class="stat-item">
+                                <span class="stat-value" id="articleGrowth">0%</span>
+                                <span class="stat-label">文章增长</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="commentGrowth">0%</span>
+                                <span class="stat-label">评论增长</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="userGrowth">0%</span>
+                                <span class="stat-label">用户增长</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/statistics.js') }}"></script>
+</body>
+</html> 

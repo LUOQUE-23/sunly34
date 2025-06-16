@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章详情 - 墨韵文苑</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/article.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+      window.articleId = {{ article_id|tojson }};
+      window.authorId = {{ (author_id if author_id is defined else None)|tojson }};
+    </script>
+</head>
+<body>
+    <!-- 背景水墨效果 -->
+    <div class="ink-bg">
+        <div class="ink-drop ink-drop1"></div>
+        <div class="ink-drop ink-drop2"></div>
+        <div class="ink-drop ink-drop3"></div>
+    </div>
+
+    <!-- 头部导航 -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <h1 class="brand-title">墨韵文苑</h1>
+                <p class="brand-subtitle">品文字之美，悟人生之道</p>
+            </div>
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="/" class="nav-link">首页</a></li>
+                    <li><a href="/articles" class="nav-link">文章</a></li>
+                    <li><a href="/daily-quote" class="nav-link">每日一句</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" id="loginBtn">登录</button>
+                    <button class="btn btn-primary" id="registerBtn">注册</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="main">
+        <div class="article-container">
+            <div class="article-content">
+                <div class="article-header">
+                    <h1 id="articleTitle">加载中…</h1>
+                    <div class="article-meta">
+                        <img id="authorAvatar" src="/static/images/default-avatar.svg" alt="作者头像" class="author-avatar">
+                        <span id="authorName">作者</span>
+                        <span id="articleDate">发布时间</span>
+                        <span id="articleCategory">分类</span>
+                    </div>
+                    <div class="article-actions">
+                        <button id="likeBtn" class="action-button"><i class="fa fa-heart"></i> <span id="likeCount">0</span></button>
+                        <button id="favoriteBtn" class="action-button"><i class="fa fa-star"></i> <span id="favoriteCount">0</span></button>
+                        <button id="reportBtn" class="action-button"><i class="fa fa-flag"></i> 举报</button>
+                        <button id="editBtn" class="action-button hidden"><i class="fa fa-edit"></i> 编辑</button>
+                        <button id="deleteBtn" class="action-button hidden"><i class="fa fa-trash"></i> 删除</button>
+                    </div>
+                </div>
+                <hr>
+                <div class="article-body" id="articleContent">加载中…</div>
+                <hr>
+                <div class="article-footer">
+                    <div class="article-tags" id="articleTags">
+                        <!-- 标签将通过JavaScript动态添加 -->
+                    </div>
+                </div>
+                <!-- 点赞评论行为展示区 -->
+                <div class="article-behavior" id="articleBehavior">
+                    <span><i class="fa fa-heart"></i> 点赞数：<span id="likeCountBehavior">0</span></span>
+                    <span><i class="fa fa-star"></i> 收藏数：<span id="favoriteCountBehavior">0</span></span>
+                    <span><i class="fa fa-comment"></i> 评论数：<span id="commentCountBehavior">0</span></span>
+                </div>
+            </div>
+
+            <!-- 评论区 -->
+            <div class="comments-section">
+                <h2 class="section-title">评论</h2>
+                <div class="comment-form">
+                    <textarea class="comment-input" id="commentInput" placeholder="写下你的评论..."></textarea>
+                    <button class="btn btn-primary submit-comment" id="submitComment">发表评论</button>
+                </div>
+                <div class="comments-list" id="commentsList">
+                    <!-- 评论将通过JavaScript动态加载 -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 登录模态框 -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>墨客登录</h3>
+                <span class="close" id="loginClose">&times;</span>
+            </div>
+            <form class="modal-form" id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">用户名</label>
+                    <input type="text" id="loginUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">密码</label>
+                    <input type="password" id="loginPassword" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">登录</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>墨客注册</h3>
+                <span class="close" id="registerClose">&times;</span>
+            </div>
+            <form class="modal-form" id="registerForm">
+                <div class="form-group">
+                    <label for="registerUsername">用户名</label>
+                    <input type="text" id="registerUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">邮箱</label>
+                    <input type="email" id="registerEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">密码</label>
+                    <input type="password" id="registerPassword" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">注册</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 举报模态框 -->
+    <div class="modal" id="reportModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>举报文章</h3>
+                <span class="close" id="reportClose">&times;</span>
+            </div>
+            <form class="modal-form" id="reportForm">
+                <div class="form-group">
+                    <label for="reportReason">举报原因</label>
+                    <select id="reportReason" name="reason" required>
+                        <option value="">请选择举报原因</option>
+                        <option value="spam">垃圾内容</option>
+                        <option value="inappropriate">不当内容</option>
+                        <option value="copyright">版权问题</option>
+                        <option value="other">其他原因</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reportDetails">详细说明</label>
+                    <textarea id="reportDetails" name="details" rows="4" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="reportCancel">取消</button>
+                    <button type="submit" class="btn btn-primary">提交举报</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 墨韵文苑. 文字如墨，情深如海.</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/article.js"></script>
+</body>
+</html> 

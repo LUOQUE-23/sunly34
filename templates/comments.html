@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>评论管理 - 墨韵文苑</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/comments.css') }}">
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="/">墨韵文苑</a>
+            </div>
+            <nav class="nav">
+                <a href="/" class="nav-link">首页</a>
+                <a href="/categories" class="nav-link">分类</a>
+                <a href="/articles" class="nav-link">文章</a>
+            </nav>
+            <div class="user-menu">
+                <span class="username"></span>
+                <div class="dropdown-menu">
+                    <a href="/profile" class="dropdown-item">个人中心</a>
+                    <a href="/favorites" class="dropdown-item">我的收藏</a>
+                    <a href="/settings" class="dropdown-item">设置</a>
+                    <a href="/admin" class="dropdown-item admin-link" style="display: none;">管理后台</a>
+                    <button class="dropdown-item" id="logout-btn">退出登录</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main class="comments-container">
+        <!-- 页面标题 -->
+        <div class="page-header">
+            <h1>评论管理</h1>
+        </div>
+
+        <!-- 筛选和搜索 -->
+        <div class="filter-bar">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="搜索评论内容...">
+                <button class="btn btn-secondary" id="search-btn">搜索</button>
+            </div>
+            <div class="filter-options">
+                <select id="article-filter">
+                    <option value="">全部文章</option>
+                </select>
+                <select id="status-filter">
+                    <option value="">全部状态</option>
+                    <option value="pending">待审核</option>
+                    <option value="approved">已通过</option>
+                    <option value="rejected">已拒绝</option>
+                </select>
+                <select id="sort-by">
+                    <option value="created_at">评论时间</option>
+                    <option value="likes">点赞数</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 评论列表 -->
+        <div class="comments-list">
+            <!-- 评论列表将通过JavaScript动态加载 -->
+        </div>
+
+        <!-- 加载更多按钮 -->
+        <button class="load-more-btn" id="load-more-btn">加载更多</button>
+    </main>
+
+    <!-- 评论详情模态框 -->
+    <div class="modal" id="comment-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>评论详情</h2>
+                <button class="close-btn" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="comment-detail">
+                    <div class="comment-header">
+                        <div class="comment-author">
+                            <img src="" alt="用户头像" class="avatar" id="comment-avatar">
+                            <div class="author-info">
+                                <span class="username" id="comment-username"></span>
+                                <span class="time" id="comment-time"></span>
+                            </div>
+                        </div>
+                        <div class="comment-status" id="comment-status"></div>
+                    </div>
+                    <div class="comment-content" id="comment-content"></div>
+                    <div class="comment-article">
+                        <h3>评论文章</h3>
+                        <a href="#" id="article-link"></a>
+                    </div>
+                    <div class="comment-actions">
+                        <button class="btn btn-primary" id="approve-btn">通过</button>
+                        <button class="btn btn-danger" id="reject-btn">拒绝</button>
+                        <button class="btn btn-secondary" id="delete-btn">删除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 删除确认对话框 -->
+    <div class="modal" id="delete-modal">
+        <div class="modal-content">
+            <h3>确认删除</h3>
+            <p>您确定要删除这条评论吗？此操作不可恢复。</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="cancel-delete">取消</button>
+                <button class="btn btn-danger" id="confirm-delete">确认删除</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/comments.js') }}"></script>
+</body>
+</html> 

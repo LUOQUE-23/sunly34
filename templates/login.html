@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>登录 - 墨韵文苑</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .login-container { max-width: 400px; margin: 80px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #eee; padding: 32px; }
+        .login-title { text-align: center; font-size: 24px; margin-bottom: 24px; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; margin-bottom: 6px; color: #333; }
+        .form-group input { width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; }
+        .login-btn { width: 100%; background: #3b7ddd; color: #fff; border: none; padding: 10px 0; border-radius: 4px; font-size: 16px; cursor: pointer; margin-top: 10px; }
+        .login-btn:hover { background: #295bb3; }
+        .login-links { text-align: right; margin-top: 10px; }
+        .login-links a { color: #3b7ddd; text-decoration: none; margin-left: 10px; }
+        .login-links a:hover { text-decoration: underline; }
+        .error-msg { color: #d33; text-align: center; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-title">登录墨韵文苑</div>
+        {% if error %}
+        <div class="error-msg">{{ error }}</div>
+        {% endif %}
+        <form method="post" action="/api/login">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" name="username" required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button class="login-btn" type="submit">登录</button>
+        </form>
+        <div class="login-links">
+            <a href="/register">注册账号</a>
+            <a href="/">返回首页</a>
+        </div>
+    </div>
+    <script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = '/';  // 登录成功后跳转到首页
+            } else {
+                alert(data.message);  // 显示错误信息
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('登录失败，请重试');
+        });
+    });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页 - 墨韵文苑</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 背景水墨效果 -->
+    <div class="ink-bg">
+        <div class="ink-drop ink-drop1"></div>
+        <div class="ink-drop ink-drop2"></div>
+        <div class="ink-drop ink-drop3"></div>
+    </div>
+
+    <!-- 头部导航 -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <h1 class="brand-title">墨韵文苑</h1>
+                <p class="brand-subtitle">品文字之美，悟人生之道</p>
+            </div>
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="/" class="nav-link active">首页</a></li>
+                    <li><a href="/articles" class="nav-link">文章</a></li>
+                    <li><a href="/daily-quote" class="nav-link">每日一句</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" id="loginBtn">登录</button>
+                    <button class="btn btn-primary" id="registerBtn">注册</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="main">
+        <!-- 每日一句 -->
+        <section class="daily-quote-section" id="daily-quote">
+            <div class="container">
+                <div class="quote-card">
+                    <div class="quote-content">
+                        <p class="quote-text" id="quoteText">正在加载每日一句...</p>
+                        <p class="quote-author" id="quoteAuthor"></p>
+                    </div>
+                    <div class="quote-decoration">
+                        <div class="bamboo-left"></div>
+                        <div class="bamboo-right"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 文章列表 -->
+        <section class="articles-section" id="articles">
+            <div class="container">
+                <h2 class="section-title">文章精选</h2>
+                <div class="articles-grid" id="articlesGrid">
+                    <!-- 文章卡片将通过JavaScript动态加载 -->
+                </div>
+                <div class="load-more">
+                    <button class="btn btn-outline" id="loadMoreBtn">加载更多</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 登录模态框 -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>墨客登录</h3>
+                <span class="close" id="loginClose">&times;</span>
+            </div>
+            <form class="modal-form" id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">用户名</label>
+                    <input type="text" id="loginUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">密码</label>
+                    <input type="password" id="loginPassword" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">登录</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>墨客注册</h3>
+                <span class="close" id="registerClose">&times;</span>
+            </div>
+            <form class="modal-form" id="registerForm">
+                <div class="form-group">
+                    <label for="registerUsername">用户名</label>
+                    <input type="text" id="registerUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">邮箱</label>
+                    <input type="email" id="registerEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">密码</label>
+                    <input type="password" id="registerPassword" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">注册</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 发布文章模态框 -->
+    <div class="modal" id="publishModal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3>分享文字</h3>
+                <span class="close" id="publishClose">&times;</span>
+            </div>
+            <form class="modal-form" id="publishForm">
+                <div class="form-group">
+                    <label for="articleTitle">标题</label>
+                    <input type="text" id="articleTitle" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="articleCategory">分类</label>
+                    <select id="articleCategory" name="category" required>
+                        <option value="">请选择分类</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="articleContent">内容</label>
+                    <textarea id="articleContent" name="content" rows="10" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">发布</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 浮动操作按钮 -->
+    <div class="fab" id="fabBtn" style="display: none;">
+        <span class="fab-icon">✍</span>
+        <span class="fab-text">写文章</span>
+    </div>
+
+    <!-- 底部 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 墨韵文苑. 文字如墨，情深如海.</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html> 

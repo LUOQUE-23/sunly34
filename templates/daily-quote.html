@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日一句 - 墨韵文苑</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=20241201">
+    <link rel="stylesheet" href="/static/css/daily-quote.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 背景水墨效果 -->
+    <div class="ink-bg">
+        <div class="ink-drop ink-drop1"></div>
+        <div class="ink-drop ink-drop2"></div>
+        <div class="ink-drop ink-drop3"></div>
+    </div>
+
+    <!-- 头部导航 -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <h1 class="brand-title">墨韵文苑</h1>
+                <p class="brand-subtitle">品文字之美，悟人生之道</p>
+            </div>
+            <nav class="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="/" class="nav-link">首页</a></li>
+                    <li><a href="/articles" class="nav-link">文章</a></li>
+                    <li><a href="/daily-quote" class="nav-link active">每日一句</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" id="loginBtn">登录</button>
+                    <button class="btn btn-primary" id="registerBtn">注册</button>
+                </div>
+                <div class="user-menu hidden">
+                    <span class="username">用户</span>
+                    <div class="dropdown-content">
+                        <a href="/profile" class="dropdown-item">个人中心</a>
+                        <a href="/favorites" class="dropdown-item">我的收藏</a>
+                        <a href="/admin" class="dropdown-item admin-link hidden">管理后台</a>
+                        <a href="#" class="dropdown-item" id="logout-btn">退出登录</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="main">
+        <div class="daily-quote-container">
+            <h1 class="page-title">每日一句</h1>
+            <div class="quote-card">
+                <p class="quote-text" id="quoteText">正在加载每日一句...</p>
+                <p class="quote-author" id="quoteAuthor"></p>
+               
+            </div>
+        </div>
+
+        <!-- 历史每日一句 -->
+        <div class="history-section">
+            <h2 class="section-title">历史每日一句</h2>
+            <div class="history-list" id="historyList">
+                <!-- 历史每日一句将通过JS动态加载 -->
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 墨韵文苑. 文字如墨，情深如海.</p>
+        </div>
+    </footer>
+
+    <!-- 登录模态框 -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>墨客登录</h3>
+                <span class="close" id="loginClose">&times;</span>
+            </div>
+            <form class="modal-form" id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">用户名</label>
+                    <input type="text" id="loginUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">密码</label>
+                    <input type="password" id="loginPassword" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">登录</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>墨客注册</h3>
+                <span class="close" id="registerClose">&times;</span>
+            </div>
+            <form class="modal-form" id="registerForm">
+                <div class="form-group">
+                    <label for="registerUsername">用户名</label>
+                    <input type="text" id="registerUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">邮箱</label>
+                    <input type="email" id="registerEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">密码</label>
+                    <input type="password" id="registerPassword" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">注册</button>
+            </form>
+        </div>
+    </div>
+
+   
+
+    <script src="/static/js/daily-quote.js?v=20241201"></script>
+</body>
+</html> 

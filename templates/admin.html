@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 - 墨韵文苑</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <!-- 侧边栏 -->
+    <div class="admin-sidebar">
+        <div class="sidebar-header">
+            <h2>管理后台</h2>
+            <p class="user-role" id="userRole">笔官</p>
+        </div>
+        <nav class="sidebar-nav">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#pending-articles" class="nav-link active" data-tab="pending-articles">
+                        📝 待审核文章
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#reports" class="nav-link" data-tab="reports">
+                        🚨 举报管理
+                    </a>
+                </li>
+                <li class="nav-item super-admin-only">
+                    <a href="#users" class="nav-link" data-tab="users">
+                        👥 用户管理
+                    </a>
+                </li>
+                <li class="nav-item super-admin-only">
+                    <a href="#logs" class="nav-link" data-tab="logs">
+                        📊 操作日志
+                    </a>
+                </li>
+                <li class="nav-item super-admin-only">
+                    <a href="#daily-quote" class="nav-link" data-tab="daily-quote">
+                        ✨ 每日一句
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#category-stats" class="nav-link" data-tab="category-stats">
+                        📚 分类统计
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn btn-outline" onclick="window.open('/', '_blank')">
+                🏠 返回首页
+            </button>
+        </div>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="admin-main">
+        <header class="admin-header">
+            <h1 id="pageTitle">待审核文章</h1>
+            <div class="header-actions">
+                <button class="btn btn-outline" id="refreshBtn">🔄 刷新</button>
+                <button class="btn btn-primary" id="logoutBtn">退出登录</button>
+            </div>
+        </header>
+
+        <main class="admin-content">
+            <!-- 待审核文章 -->
+            <div class="tab-content active" id="pending-articles-content">
+                <div class="content-header">
+                    <h2>待审核文章</h2>
+                    <div class="filter-bar">
+                        <select id="categoryFilter">
+                            <option value="">全部分类</option>
+                            <option value="散文">散文</option>
+                            <option value="诗歌">诗歌</option>
+                            <option value="小说">小说</option>
+                            <option value="随笔">随笔</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="articles-list" id="pendingArticlesList">
+                    <!-- 文章卡片将通过JavaScript加载 -->
+                </div>
+            </div>
+
+            <!-- 举报管理 -->
+            <div class="tab-content" id="reports-content">
+                <div class="content-header">
+                    <h2>举报管理</h2>
+                </div>
+                <div class="reports-list" id="reportsList">
+                    <!-- 举报列表将通过JavaScript加载 -->
+                </div>
+            </div>
+
+            <!-- 用户管理 -->
+            <div class="tab-content" id="users-content">
+                <div class="content-header">
+                    <h2>用户管理</h2>
+                    <div class="header-actions">
+                        <button class="btn btn-danger" id="batchBanBtn" style="display: none;">批量封禁</button>
+                    <div class="search-bar">
+                        <input type="text" id="userSearch" placeholder="搜索用户名...">
+                        <button class="btn btn-primary" id="searchBtn">搜索</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="users-list" id="usersList">
+                    <!-- 用户列表将通过JavaScript加载 -->
+                </div>
+            </div>
+
+            <!-- 操作日志 -->
+            <div class="tab-content" id="logs-content">
+                <div class="content-header">
+                    <h2>操作日志</h2>
+                </div>
+                <div class="logs-list" id="logsList">
+                    <!-- 日志列表将通过JavaScript加载 -->
+                </div>
+            </div>
+
+            <!-- 每日一句管理 -->
+            <div class="tab-content" id="daily-quote-content">
+                <div class="content-header">
+                    <h2>每日一句管理</h2>
+                    <button class="btn btn-primary" id="addQuoteBtn">添加每日一句</button>
+                </div>
+                <div class="current-quote" id="currentQuote">
+                    <!-- 当前每日一句 -->
+                </div>
+                <div class="quotes-history" id="quotesHistory">
+                    <!-- 历史每日一句 -->
+                </div>
+            </div>
+
+            <!-- 新增分类统计Tab内容区 -->
+            <div class="tab-content" id="category-stats-content">
+                <div class="content-header">
+                    <h2>分类文章统计</h2>
+                </div>
+            <div class="admin-section-card">
+                <h2>分类文章统计（数据库视图）</h2>
+                <table class="admin-table" id="categoryArticleTable">
+                    <thead>
+                        <tr><th>分类ID</th><th>分类名称</th><th>文章数</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 文章审核模态框 -->
+    <div class="modal" id="reviewModal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3>文章审核</h3>
+                <span class="close" id="reviewClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="article-preview" id="articlePreview">
+                    <!-- 文章预览内容 -->
+                </div>
+                <form class="review-form" id="reviewForm">
+                    <div class="form-group">
+                        <label for="reviewCategory">分类</label>
+                        <select id="reviewCategory" name="category" required>
+                            <option value="散文">散文</option>
+                            <option value="诗歌">诗歌</option>
+                            <option value="小说">小说</option>
+                            <option value="随笔">随笔</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" onclick="reviewArticle('rejected')">
+                            ❌ 拒绝
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="reviewArticle('approved')">
+                            ✅ 通过
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加每日一句模态框 -->
+    <div class="modal" id="addQuoteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加每日一句</h3>
+                <span class="close" id="addQuoteClose">&times;</span>
+            </div>
+            <form class="modal-form" id="addQuoteForm">
+                <div class="form-group">
+                    <label for="quoteContent">内容</label>
+                    <textarea id="quoteContent" name="content" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="quoteAuthor">作者</label>
+                    <input type="text" id="quoteAuthor" name="author">
+                </div>
+                <div class="form-group">
+                    <label for="quoteSource">出处</label>
+                    <input type="text" id="quoteSource" name="source">
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">添加</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 批量封禁确认对话框 -->
+    <div class="modal" id="batchBanModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>确认批量封禁</h3>
+                <span class="close" id="batchBanClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="batchBanMessage">您确定要封禁选中的用户吗？此操作将删除用户账户且不可恢复。</p>
+                <div id="selectedUsersList" class="selected-users-list">
+                    <!-- 选中的用户列表 -->
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" id="cancelBatchBan">取消</button>
+                <button class="btn btn-danger" id="confirmBatchBan">确认封禁</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../static/js/admin.js"></script>
+</body>
+</html> 

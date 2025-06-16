@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分类管理 - 文学社区</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/categories.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <a href="/">文学社区</a>
+            </div>
+            <nav class="nav">
+                <a href="/" class="nav-link">首页</a>
+                <a href="/articles" class="nav-link">文章</a>
+                <a href="/categories" class="nav-link">分类</a>
+                <a href="/profile" class="nav-link">个人中心</a>
+                <a href="/admin" class="nav-link">管理后台</a>
+            </nav>
+            <div class="user-info">
+                <span id="username"></span>
+                <a href="javascript:void(0)" onclick="logout()" class="logout-btn">退出</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="categories-container">
+            <div class="page-header">
+                <h1>分类管理</h1>
+                <button class="add-category-btn" onclick="showAddCategoryModal()">添加分类</button>
+            </div>
+
+            <div class="filter-bar">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="搜索分类名称...">
+                    <button onclick="searchCategories()">搜索</button>
+                </div>
+                <div class="filter-options">
+                    <select id="statusFilter" onchange="filterCategories()">
+                        <option value="">所有状态</option>
+                        <option value="active">正常</option>
+                        <option value="disabled">禁用</option>
+                    </select>
+                    <select id="sortBy" onchange="filterCategories()">
+                        <option value="name">名称</option>
+                        <option value="articles">文章数</option>
+                        <option value="created_at">创建时间</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="categories-list" id="categoriesList">
+                <!-- 分类列表将通过JavaScript动态加载 -->
+            </div>
+
+            <button class="load-more-btn" id="loadMoreBtn" onclick="loadMoreCategories()">加载更多</button>
+        </div>
+    </main>
+
+    <!-- 添加/编辑分类模态框 -->
+    <div class="modal" id="categoryModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="hideCategoryModal()">&times;</span>
+            <h2 id="modalTitle">添加分类</h2>
+            <form id="categoryForm" onsubmit="saveCategory(event)">
+                <input type="hidden" id="categoryId">
+                <div class="form-group">
+                    <label for="name">分类名称</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">分类描述</label>
+                    <textarea id="description" name="description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="status">状态</label>
+                    <select id="status" name="status" required>
+                        <option value="active">正常</option>
+                        <option value="disabled">禁用</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="save-btn">保存</button>
+                    <button type="button" class="cancel-btn" onclick="hideCategoryModal()">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 删除确认模态框 -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <h2>确认删除</h2>
+            <p>确定要删除这个分类吗？此操作不可恢复。</p>
+            <div class="form-actions">
+                <button class="delete-btn" onclick="confirmDelete()">删除</button>
+                <button class="cancel-btn" onclick="hideDeleteModal()">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/categories.js') }}"></script>
+</body>
+</html> 
